@@ -17,7 +17,7 @@
 #include <sys/epoll.h>
 #include <sys/socket.h>
 
-static_assert(EAGAIN == EWOULDBLOCK);
+static_assert(EAGAIN == EWOULDBLOCK, "abrikos");
 
 using namespace NLogging;
 using namespace NProtocol;

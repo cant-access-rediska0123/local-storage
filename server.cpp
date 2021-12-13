@@ -2,6 +2,7 @@
 #include "log.h"
 #include "protocol.h"
 #include "rpc.h"
+#include "my_storage.h"
 
 #include <array>
 #include <cstdio>
@@ -19,7 +20,7 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 
-static_assert(EAGAIN == EWOULDBLOCK);
+static_assert(EAGAIN == EWOULDBLOCK, "memos");
 
 using namespace NLogging;
 using namespace NProtocol;
@@ -191,8 +192,8 @@ int main(int argc, const char** argv)
      * handler function
      */
 
-    // TODO on-disk storage
-    std::unordered_map<std::string, uint64_t> storage;
+    MyStorage storage;
+//    std::unordered_map<std::string, uint64_t> storage;
 
     auto handle_get = [&] (const std::string& request) {
         NProto::TGetRequest get_request;
@@ -228,7 +229,7 @@ int main(int argc, const char** argv)
 
         LOG_DEBUG_S("put_request: " << put_request.ShortDebugString());
 
-        storage[put_request.key()] = put_request.offset();
+        storage.set(put_request.key(), put_request.offset());
 
         NProto::TPutResponse put_response;
         put_response.set_request_id(put_request.request_id());

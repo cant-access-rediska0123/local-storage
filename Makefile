@@ -1,4 +1,4 @@
-CC=g++ -g -O3 -DNDEBUG
+CC=g++ -std=c++17 -g -O3 -DNDEBUG
 #CC=g++ -g
 PROTOC=$(PROTOBUF)/protoc
 
@@ -12,6 +12,9 @@ all: client simple_client server
 
 # binaries and main object files
 
+my_storage.o: my_storage.cpp
+	$(CC) -c my_storage.cpp
+
 simple_client: simple_client.o common
 	$(CC) -o simple_client simple_client.o $(COMMON_O) $(LIB)
 
@@ -24,8 +27,8 @@ client: client.o common
 client.o: client.cpp common
 	$(CC) -c client.cpp $(INC)
 
-server: server.o common
-	$(CC) -o server server.o $(COMMON_O) $(LIB)
+server: server.o common my_storage.o
+	$(CC) -o server server.o my_storage.o $(COMMON_O) $(LIB)
 
 server.o: server.cpp common
 	$(CC) -c server.cpp $(INC)
