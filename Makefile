@@ -1,4 +1,4 @@
-CC=g++ -std=c++17 -g -O3 -DNDEBUG
+CC=g++ -std=c++17 -g -O3 -DNDEBUG -pthread -pedantic
 #CC=g++ -g
 PROTOC=$(PROTOBUF)/protoc
 

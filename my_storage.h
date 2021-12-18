@@ -3,16 +3,18 @@
 
 #include <unordered_map>
 #include <cstring>
+#include <pthread.h>
 #include <fstream>
 
 typedef std::string Key;
 typedef uint64_t Value;
 
-const std::string DEFAULT_STORAGE_FILEPATH = "storage.txt";
+const std::string DEFAULT_STORAGE_FILEPATH1 = "storage1.txt";
+const std::string DEFAULT_STORAGE_FILEPATH2 = "storage2.txt";
 
 class MyStorage {
 public:
-    explicit MyStorage(const std::string &storage_filepath = DEFAULT_STORAGE_FILEPATH);
+    explicit MyStorage();
 
     std::unordered_map<Key, Value>::const_iterator find(const Key &key) const;
 
@@ -22,8 +24,6 @@ public:
 
 private:
     std::unordered_map<Key, Value> _st;
-    std::ofstream _out;
-    std::string _storage_filepath;
 };
 
 #endif //LOCAL_STORAGE_MY_STORAGE_H
